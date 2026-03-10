@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Her Circle — You Found Us.</title>
+  <meta name="description" content="You already know something needs to change. You just needed someone to say it out loud." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+SC:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --gold:        #C9A84C;
+      --gold-light:  #D4B870;
+      --gold-dim:    #7A5F10;
+      --black:       #070605;
+      --brown-deep:  #100C06;
+      --cream:       #F0EAD6;
+      --cream-dim:   #C0B49A;
+      --cream-muted: #7A7060;
+      --font-display: 'Cormorant SC', serif;
+      --font-body:    'Cormorant Garamond', serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* Grain */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.3;
+    }
+
+    /* ── Layout ── */
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 70px 28px 80px;
+      background:
+        radial-gradient(ellipse 80% 55% at 50% 100%, rgba(139,105,20,0.14) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0,0,0,0.8) 0%, transparent 60%),
+        var(--black);
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* ── Brand mark ── */
+    .brand {
+      font-family: var(--font-display);
+      font-size: 10px;
+      letter-spacing: 0.5em;
+      color: var(--gold-dim);
+      margin-bottom: 52px;
+      opacity: 0;
+      animation: rise 1s ease 0.1s forwards;
+    }
+
+    /* ── Hook line ── */
+    .hook {
+      font-family: var(--font-body);
+      font-size: clamp(13px, 2vw, 15px);
+      font-style: italic;
+      letter-spacing: 0.06em;
+      color: var(--gold);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: rise 1s ease 0.3s forwards;
+    }
+
+    /* ── Main statement ── */
+    .statement {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 7vw, 52px);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--cream);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: rise 1.1s ease 0.5s forwards;
+    }
+
+    .statement em {
+      color: var(--gold);
+      font-style: italic;
+      font-family: var(--font-body);
+      font-weight: 300;
+    }
+
+    /* ── Substatement ── */
+    .sub {
+      font-size: clamp(16px, 2.8vw, 20px);
+      font-style: italic;
+      color: var(--cream-dim);
+      max-width: 480px;
+      margin: 0 auto 48px;
+      line-height: 1.75;
+      opacity: 0;
+      animation: rise 1s ease 0.75s forwards;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      width: 50px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 48px;
+      opacity: 0;
+      animation: fadeIn 1s ease 0.9s forwards;
+    }
+
+    /* ── VSL Container ── */
+    .vsl-wrap {
+      width: 100%;
+      max-width: 560px;
+      margin: 0 auto 52px;
+      opacity: 0;
+      animation: rise 1s ease 1s forwards;
+    }
+
+    .vsl-frame {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 */
+      background: var(--brown-deep);
+      border: 1px solid rgba(201,168,76,0.15);
+      overflow: hidden;
+    }
+
+    /* Replace the placeholder below with your actual video embed */
+    .vsl-frame iframe,
+    .vsl-frame video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Placeholder shown until you add real video */
+    .vsl-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 50%, rgba(139,105,20,0.1) 0%, transparent 70%),
+        var(--brown-deep);
+    }
+
+    .vsl-placeholder .play-icon {
+      width: 56px;
+      height: 56px;
+      border: 1px solid rgba(201,168,76,0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 20px;
+    }
+
+    .vsl-placeholder p {
+      font-size: 13px;
+      font-style: italic;
+      color: var(--cream-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .vsl-caption {
+      margin-top: 14px;
+      font-size: 13px;
+      font-style: italic;
+      color: var(--cream-muted);
+      text-align: center;
+    }
+
+    /* ── Mirror lines ── */
+    .mirrors {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto 52px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      opacity: 0;
+      animation: rise 1s ease 1.1s forwards;
+    }
+
+    .mirror-line {
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(201,168,76,0.08);
+      font-size: clamp(15px, 2.2vw, 17px);
+      font-style: italic;
+      color: var(--cream-dim);
+      line-height: 1.6;
+      text-align: left;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .mirror-line::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: 10px;
+      flex-shrink: 0;
+      margin-top: 6px;
+      opacity: 0.7;
+    }
+
+    /* ── The pull ── */
+    .pull {
+      font-size: clamp(18px, 3vw, 22px);
+      font-style: italic;
+      color: var(--cream);
+      max-width: 440px;
+      margin: 0 auto 16px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: rise 1s ease 1.2s forwards;
+    }
+
+    .pull-gold {
+      font-size: clamp(16px, 2.5vw, 19px);
+      font-style: italic;
+      color: var(--gold);
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: rise 1s ease 1.35s forwards;
+    }
+
+    /* ── CTA Button ── */
+    .cta-wrap {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: rise 1s ease 1.4s forwards;
+    }
+
+    .btn-join {
+      display: block;
+      width: 100%;
+      padding: 20px 40px;
+      background: var(--gold);
+      color: var(--black);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-decoration: none;
+      text-transform: uppercase;
+      text-align: center;
+      transition: all 0.35s ease;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .btn-join::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold-light);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+
+    .btn-join:hover::before { transform: scaleX(1); }
+    .btn-join span { position: relative; z-index: 1; }
+
+    .cta-note {
+      font-size: 13px;
+      font-style: italic;
+      color: var(--cream-muted);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* ── Footer ── */
+    .page-footer {
+      margin-top: 80px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(201,168,76,0.08);
+      width: 100%;
+      text-align: center;
+    }
+
+    .page-footer p {
+      font-size: 12px;
+      font-style: italic;
+      color: var(--cream-muted);
+      letter-spacing: 0.04em;
+    }
+
+    .page-footer .handle {
+      font-family: var(--font-display);
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      color: var(--gold-dim);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    /* ── Animations ── */
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 0.6; }
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 480px) {
+      .page { padding: 56px 22px 64px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+
+    <!-- Brand -->
+    <p class="brand">H E R &nbsp; C I R C L E</p>
+
+    <!-- Hook -->
+    <p class="hook">You didn't land here by accident.</p>
+
+    <!-- Main statement -->
+    <h1 class="statement">
+      You have loved fully.<br/>
+      And still ended up feeling like<br/>
+      <em>an option.</em>
+    </h1>
+
+    <!-- Sub -->
+    <p class="sub">
+      Something in you already knows the way you have been loving 
+      has not been working. This is the space that is going to 
+      show you why — and what changes next.
+    </p>
+
+    <div class="divider"></div>
+
+    <!-- VSL -->
+    <div class="vsl-wrap">
+      <div class="vsl-frame">
+
+        <!--
+          ═══════════════════════════════════════════════
+          REPLACE THIS PLACEHOLDER WITH YOUR VSL VIDEO
+          Options:
+          1. YouTube embed:
+             <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=0&rel=0" allowfullscreen></iframe>
+          2. Self-hosted:
+             <video controls poster="your-thumbnail.jpg">
+               <source src="your-video.mp4" type="video/mp4">
+             </video>
+          ═══════════════════════════════════════════════
+        -->
+
+        <div class="vsl-placeholder">
+          <div class="play-icon">▶</div>
+          <p>Watch this. It will not take long.</p>
+        </div>
+
+      </div>
+      <p class="vsl-caption">90 seconds. Watch before you scroll.</p>
+    </div>
+
+    <!-- Mirror lines -->
+    <div class="mirrors">
+      <div class="mirror-line">You have explained his behaviour more than he ever has.</div>
+      <div class="mirror-line">You have stayed longer than you should have, more times than you can count.</div>
+      <div class="mirror-line">You have shrunk yourself to keep the peace — and lost yourself in the quiet.</div>
+      <div class="mirror-line">Somewhere underneath all of it, you already know you deserve more.</div>
+    </div>
+
+    <!-- The pull -->
+    <p class="pull">
+      There is a private space being built for women who are 
+      done arriving at the same place with different faces.
+    </p>
+    <p class="pull-gold">
+      Something is coming. And you should be inside when it does.
+    </p>
+
+    <!-- CTA -->
+    <div class="cta-wrap">
+      <a href="https://wa.me/joinhercircle" class="btn-join">
+        <span>Join The Circle — It's Free</span>
+      </a>
+      <p class="cta-note">
+        WhatsApp only. No email list. No spam.<br/>
+        Just truth — sent directly to your phone.
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="page-footer">
+      <span class="handle">@joinhercircle</span>
+      <p>We keep our faces private so this space stays about you — not us.</p>
+    </div>
+
+  </div>
+
+</body>
+</html>
